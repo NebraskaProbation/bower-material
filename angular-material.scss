@@ -1420,254 +1420,6 @@ md-backdrop {
 }
 
 
-$button-border-radius: 3px !default;
-$button-fab-border-radius: 50% !default;
-$button-icon-border-radius: $button-fab-border-radius !default;
-
-$button-line-height: rem(3.60) !default;
-$button-margin: rem(0.600) rem(0.800) !default;
-$button-min-width: rem(8.800) !default;
-$button-padding: 0 $button-left-right-padding !default;
-
-
-// Fab buttons
-$button-fab-line-height: rem(5.600) !default;
-$button-fab-mini-width: rem(4.00) !default;
-$button-fab-mini-height: rem(4.00) !default;
-$button-fab-mini-line-height: rem(4.00) !default;
-
-$button-fab-toast-offset: $button-fab-height * 0.75 !default;
-
-$icon-button-height: rem(4.000) !default;
-$icon-button-width: rem(4.000) !default;
-$icon-button-margin: rem(0.600) !default;
-
-// Fix issue causing buttons in Firefox to be 2px bigger than they should
-button.md-button::-moz-focus-inner {
-  border: 0;
-}
-
-.md-button {
-  border-radius: $button-border-radius;
-  box-sizing: border-box;
-  color: currentColor;
-
-  user-select: none;
-  position: relative; //for child absolute-positioned <canvas>
-
-  outline: none;
-  border: 0;
-  display: inline-block;
-  align-items: center;
-  padding: $button-padding;
-  margin: $button-margin;
-  line-height: $button-line-height;
-  min-height: $button-line-height;
-  background: transparent;
-  white-space: nowrap;
-  // override for FAB, icon buttons, etc.
-  min-width: $button-min-width;
-
-  text-align: center;
-
-  // Always uppercase buttons
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: $body-font-size-base;
-  font-style: inherit;
-  font-variant: inherit;
-  font-family: inherit;
-  text-decoration: none;
-
-  cursor: pointer;
-  overflow: hidden;   // for ink containment
-
-  transition: box-shadow $swift-ease-out-duration $swift-ease-out-timing-function,
-              background-color $swift-ease-out-duration $swift-ease-out-timing-function;
-
-  &:focus {
-    outline: none;
-  }
-
-  &:hover, &:focus {
-    text-decoration: none;
-  }
-
-  // By default $ngAnimate looks for transition durations on the element, when using ng-hide, ng-if, ng-show.
-  // The .md-button has a transition duration applied, which means, that $ngAnimate delays the hide process.
-  // To avoid this, we need to reset the transition, when $ngAnimate looks for the duration.
-  &.ng-hide, &.ng-leave {
-    transition: none;
-  }
-
-  &.md-cornered {
-    border-radius: 0;
-  }
-
-  &.md-icon {
-    padding: 0;
-    background: none;
-  }
-
-  &.md-raised {
-    &:not([disabled]) {
-      @include md-shadow-bottom-z-1();
-    }
-  }
-
-  &.md-icon-button {
-    margin: 0 $icon-button-margin;
-    height: $icon-button-height;
-    min-width: 0;
-    line-height: $icon-size;
-    padding: $baseline-grid;
-    width: $icon-button-width;
-    border-radius: $button-icon-border-radius;
-    .md-ripple-container {
-      border-radius: $button-icon-border-radius;
-      background-clip: padding-box;
-      overflow: hidden;
-      // The following hack causes Safari/Chrome to respect overflow hidden for ripples
-      -webkit-mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC');
-    }
-  }
-
-  &.md-fab {
-
-    // Include the top/left/bottom/right fab positions
-    @include fab-all-positions();
-
-    z-index: $z-index-fab;
-
-    line-height: $button-fab-line-height;
-
-    min-width: 0;
-    width: $button-fab-width;
-    height: $button-fab-height;
-    vertical-align: middle;
-
-    @include md-shadow-bottom-z-1();
-    border-radius: $button-fab-border-radius;
-    background-clip: padding-box;
-    overflow: hidden;
-
-    transition: $swift-ease-in;
-    transition-property: background-color, box-shadow, transform;
-    .md-ripple-container {
-      border-radius: $button-fab-border-radius;
-      background-clip: padding-box;
-      overflow: hidden;
-      // The following hack causes Safari/Chrome to respect overflow hidden for ripples
-      -webkit-mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC');
-    }
-
-    &.md-mini {
-      line-height: $button-fab-mini-line-height;
-      width: $button-fab-mini-width;
-      height: $button-fab-mini-height;
-    }
-
-    &.ng-hide, &.ng-leave {
-      transition: none;
-    }
-  }
-
-  &:not([disabled]) {
-    &.md-raised,
-    &.md-fab {
-      &.md-focused {
-        @include md-shadow-bottom-z-1();
-      }
-      &:active {
-        @include md-shadow-bottom-z-2();
-      }
-    }
-  }
-
-  .md-ripple-container {
-    border-radius: $button-border-radius;
-    background-clip: padding-box;
-    overflow: hidden;
-    // The following hack causes Safari/Chrome to respect overflow hidden for ripples
-    -webkit-mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC');
-  }
-}
-
-// Using `display:block;` is required for correct vertical alignment
-// because '.md-button' uses `display:inline-block;`.
-.md-button.md-icon-button,
-button.md-button.md-fab {
-  md-icon {
-    display: block;
-  }
-}
-
-._md-toast-open-top {
-  .md-button.md-fab-top-left,
-  .md-button.md-fab-top-right {
-    transition: $swift-ease-out;
-    transform: translate3d(0, $button-fab-toast-offset, 0);
-    &:not([disabled]) {
-      &.md-focused,
-      &:hover {
-        transform: translate3d(0, $button-fab-toast-offset - 1, 0);
-      }
-    }
-  }
-}
-
-._md-toast-open-bottom {
-  .md-button.md-fab-bottom-left,
-  .md-button.md-fab-bottom-right {
-    transition: $swift-ease-out;
-    transform: translate3d(0, -$button-fab-toast-offset, 0);
-    &:not([disabled]) {
-      &.md-focused,
-      &:hover {
-        transform: translate3d(0, -$button-fab-toast-offset - 1, 0);
-      }
-    }
-  }
-}
-
-.md-button-group {
-  display: flex;
-  flex: 1;
-  width: 100%;
-
-  & > .md-button {
-    flex: 1;
-
-    display: block;
-
-    overflow: hidden;
-
-    width: 0;
-
-    border-width: 1px 0px 1px 1px;
-    border-radius: 0;
-
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    &:first-child {
-      border-radius: 2px 0px 0px 2px;
-    }
-    &:last-child {
-      border-right-width: 1px;
-      border-radius: 0px 2px 2px 0px;
-    }
-  }
-}
-// IE only
-@media screen and (-ms-high-contrast: active) {
-  .md-button.md-raised,
-  .md-button.md-fab {
-    border: 1px solid #fff;
-  }
-}
-
 $bottom-sheet-horizontal-padding: 2 * $baseline-grid !default;
 $bottom-sheet-vertical-padding: 1 * $baseline-grid !default;
 $bottom-sheet-icon-after-margin: 4 * $baseline-grid !default;
@@ -2055,6 +1807,254 @@ md-card {
   }
 }
 
+
+$button-border-radius: 3px !default;
+$button-fab-border-radius: 50% !default;
+$button-icon-border-radius: $button-fab-border-radius !default;
+
+$button-line-height: rem(3.60) !default;
+$button-margin: rem(0.600) rem(0.800) !default;
+$button-min-width: rem(8.800) !default;
+$button-padding: 0 $button-left-right-padding !default;
+
+
+// Fab buttons
+$button-fab-line-height: rem(5.600) !default;
+$button-fab-mini-width: rem(4.00) !default;
+$button-fab-mini-height: rem(4.00) !default;
+$button-fab-mini-line-height: rem(4.00) !default;
+
+$button-fab-toast-offset: $button-fab-height * 0.75 !default;
+
+$icon-button-height: rem(4.000) !default;
+$icon-button-width: rem(4.000) !default;
+$icon-button-margin: rem(0.600) !default;
+
+// Fix issue causing buttons in Firefox to be 2px bigger than they should
+button.md-button::-moz-focus-inner {
+  border: 0;
+}
+
+.md-button {
+  border-radius: $button-border-radius;
+  box-sizing: border-box;
+  color: currentColor;
+
+  user-select: none;
+  position: relative; //for child absolute-positioned <canvas>
+
+  outline: none;
+  border: 0;
+  display: inline-block;
+  align-items: center;
+  padding: $button-padding;
+  margin: $button-margin;
+  line-height: $button-line-height;
+  min-height: $button-line-height;
+  background: transparent;
+  white-space: nowrap;
+  // override for FAB, icon buttons, etc.
+  min-width: $button-min-width;
+
+  text-align: center;
+
+  // Always uppercase buttons
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: $body-font-size-base;
+  font-style: inherit;
+  font-variant: inherit;
+  font-family: inherit;
+  text-decoration: none;
+
+  cursor: pointer;
+  overflow: hidden;   // for ink containment
+
+  transition: box-shadow $swift-ease-out-duration $swift-ease-out-timing-function,
+              background-color $swift-ease-out-duration $swift-ease-out-timing-function;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+
+  // By default $ngAnimate looks for transition durations on the element, when using ng-hide, ng-if, ng-show.
+  // The .md-button has a transition duration applied, which means, that $ngAnimate delays the hide process.
+  // To avoid this, we need to reset the transition, when $ngAnimate looks for the duration.
+  &.ng-hide, &.ng-leave {
+    transition: none;
+  }
+
+  &.md-cornered {
+    border-radius: 0;
+  }
+
+  &.md-icon {
+    padding: 0;
+    background: none;
+  }
+
+  &.md-raised {
+    &:not([disabled]) {
+      @include md-shadow-bottom-z-1();
+    }
+  }
+
+  &.md-icon-button {
+    margin: 0 $icon-button-margin;
+    height: $icon-button-height;
+    min-width: 0;
+    line-height: $icon-size;
+    padding: $baseline-grid;
+    width: $icon-button-width;
+    border-radius: $button-icon-border-radius;
+    .md-ripple-container {
+      border-radius: $button-icon-border-radius;
+      background-clip: padding-box;
+      overflow: hidden;
+      // The following hack causes Safari/Chrome to respect overflow hidden for ripples
+      -webkit-mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC');
+    }
+  }
+
+  &.md-fab {
+
+    // Include the top/left/bottom/right fab positions
+    @include fab-all-positions();
+
+    z-index: $z-index-fab;
+
+    line-height: $button-fab-line-height;
+
+    min-width: 0;
+    width: $button-fab-width;
+    height: $button-fab-height;
+    vertical-align: middle;
+
+    @include md-shadow-bottom-z-1();
+    border-radius: $button-fab-border-radius;
+    background-clip: padding-box;
+    overflow: hidden;
+
+    transition: $swift-ease-in;
+    transition-property: background-color, box-shadow, transform;
+    .md-ripple-container {
+      border-radius: $button-fab-border-radius;
+      background-clip: padding-box;
+      overflow: hidden;
+      // The following hack causes Safari/Chrome to respect overflow hidden for ripples
+      -webkit-mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC');
+    }
+
+    &.md-mini {
+      line-height: $button-fab-mini-line-height;
+      width: $button-fab-mini-width;
+      height: $button-fab-mini-height;
+    }
+
+    &.ng-hide, &.ng-leave {
+      transition: none;
+    }
+  }
+
+  &:not([disabled]) {
+    &.md-raised,
+    &.md-fab {
+      &.md-focused {
+        @include md-shadow-bottom-z-1();
+      }
+      &:active {
+        @include md-shadow-bottom-z-2();
+      }
+    }
+  }
+
+  .md-ripple-container {
+    border-radius: $button-border-radius;
+    background-clip: padding-box;
+    overflow: hidden;
+    // The following hack causes Safari/Chrome to respect overflow hidden for ripples
+    -webkit-mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC');
+  }
+}
+
+// Using `display:block;` is required for correct vertical alignment
+// because '.md-button' uses `display:inline-block;`.
+.md-button.md-icon-button,
+button.md-button.md-fab {
+  md-icon {
+    display: block;
+  }
+}
+
+._md-toast-open-top {
+  .md-button.md-fab-top-left,
+  .md-button.md-fab-top-right {
+    transition: $swift-ease-out;
+    transform: translate3d(0, $button-fab-toast-offset, 0);
+    &:not([disabled]) {
+      &.md-focused,
+      &:hover {
+        transform: translate3d(0, $button-fab-toast-offset - 1, 0);
+      }
+    }
+  }
+}
+
+._md-toast-open-bottom {
+  .md-button.md-fab-bottom-left,
+  .md-button.md-fab-bottom-right {
+    transition: $swift-ease-out;
+    transform: translate3d(0, -$button-fab-toast-offset, 0);
+    &:not([disabled]) {
+      &.md-focused,
+      &:hover {
+        transform: translate3d(0, -$button-fab-toast-offset - 1, 0);
+      }
+    }
+  }
+}
+
+.md-button-group {
+  display: flex;
+  flex: 1;
+  width: 100%;
+
+  & > .md-button {
+    flex: 1;
+
+    display: block;
+
+    overflow: hidden;
+
+    width: 0;
+
+    border-width: 1px 0px 1px 1px;
+    border-radius: 0;
+
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:first-child {
+      border-radius: 2px 0px 0px 2px;
+    }
+    &:last-child {
+      border-right-width: 1px;
+      border-radius: 0px 2px 2px 0px;
+    }
+  }
+}
+// IE only
+@media screen and (-ms-high-contrast: active) {
+  .md-button.md-raised,
+  .md-button.md-fab {
+    border: 1px solid #fff;
+  }
+}
 
 //$checkbox-width: 20px !default;
 //$checkbox-height: $checkbox-width !default;
@@ -3729,6 +3729,249 @@ md-list-item {
   }
 }
 
+md-toolbar.md-menu-toolbar {
+  h2.md-toolbar-tools {
+    line-height: 1rem;
+    height: auto;
+    padding: 3.5 * $baseline-grid;
+    padding-bottom: 1.5 * $baseline-grid;
+  }
+}
+
+md-menu-bar {
+  padding: 0 2.5 * $baseline-grid;
+  display: block;
+  position: relative;
+  z-index: 2;
+  .md-menu {
+    display: inline-block;
+    padding: 0;
+    position: relative;
+  }
+  button {
+    font-size: rem(1.4);
+    padding: 0 1.25 * $baseline-grid;
+    margin: 0;
+    border: 0;
+    background-color: transparent;
+    height: 5 * $baseline-grid;
+  }
+
+  md-backdrop._md-menu-backdrop {
+    z-index: -2;
+  }
+}
+
+md-menu-content._md-menu-bar-menu.md-dense {
+  max-height: none;
+  padding: 2 * $baseline-grid 0;
+  md-menu-item.md-indent {
+    position: relative;
+    > md-icon {
+      position: absolute;
+      padding: 0;
+      width: 24px;
+      top: 0.75 * $baseline-grid;
+      @include rtl-prop(left, right, 3 * $baseline-grid);
+    }
+    > .md-button, .md-menu > .md-button {
+      @include rtl(padding, 0 4 * $baseline-grid 0 8 * $baseline-grid, 0 8 * $baseline-grid 0 4 * $baseline-grid);
+    }
+  }
+  .md-button {
+    min-height: 0;
+    height: 4 * $baseline-grid;
+    display: flex;
+    span {
+      flex-grow: 1;
+    }
+    span.md-alt-text {
+      flex-grow: 0;
+      align-self: flex-end;
+      margin: 0 $baseline-grid;
+    }
+  }
+  md-menu-divider {
+    margin: $baseline-grid 0;
+  }
+
+  md-menu-item > .md-button, .md-menu > .md-button {
+    @include rtl(text-align, left, right);
+    text-align: start;
+  }
+
+  .md-menu {
+    padding: 0;
+    > .md-button {
+      position: relative;
+      margin: 0;
+      width: 100%;
+      text-transform: none;
+      font-weight: normal;
+      border-radius: 0px;
+      @include rtl-prop(padding-left, padding-right, 2 * $baseline-grid);
+      &:after {
+        display: block;
+        content: '\25BC';
+        position: absolute;
+        top: 0px;
+        speak: none;
+        @include rtl(transform, rotate(270deg) scaleY(0.45) scaleX(0.9), rotate(90deg) scaleY(0.45) scaleX(0.9));
+        @include rtl-prop(right, left, 3.5 * $baseline-grid);
+      }
+    }
+  }
+}
+
+$menu-border-radius: 2px !default;
+$max-visible-items: 6 !default;
+$menu-item-height: 6 * $baseline-grid !default;
+$dense-menu-item-height: 4 * $baseline-grid !default;
+$max-menu-height: 2 * $baseline-grid + $max-visible-items * $menu-item-height !default;
+$max-dense-menu-height: 2 * $baseline-grid + $max-visible-items * $dense-menu-item-height !default;
+
+._md-open-menu-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: $z-index-menu;
+  opacity: 0;
+  border-radius: $menu-border-radius;
+
+  md-menu-divider {
+    margin-top: $baseline-grid / 2;
+    margin-bottom: $baseline-grid / 2;
+    height: 1px;
+    min-height: 1px;
+    max-height: 1px;
+    width: 100%;
+  }
+
+  md-menu-content > * {
+    opacity: 0;
+  }
+
+  // Don't let the user click something until it's animated
+  &:not(._md-clickable) {
+    pointer-events: none;
+  }
+
+  // enter: menu scales in, then list fade in.
+  &._md-active {
+    opacity: 1;
+    transition: $swift-ease-out;
+    transition-duration: 200ms;
+    > md-menu-content > * {
+      opacity: 1;
+      transition: $swift-ease-in;
+      transition-duration: 200ms;
+      transition-delay: 100ms;
+    }
+  }
+  // leave: the container fades out
+  &._md-leave {
+    opacity: 0;
+    transition: $swift-ease-in;
+    transition-duration: 250ms;
+  }
+}
+
+md-menu-content {
+  display: flex;
+  flex-direction: column;
+  padding: $baseline-grid 0;
+  max-height: $max-menu-height;
+  overflow-y: auto;
+  &.md-dense {
+    max-height: $max-dense-menu-height;
+    md-menu-item {
+      height: $dense-menu-item-height;
+      min-height: 0px;
+    }
+  }
+}
+
+md-menu-item {
+  display: flex;
+  flex-direction: row;
+  min-height: $menu-item-height;
+  height: $menu-item-height;
+  align-content: center;
+  justify-content: flex-start;
+
+  > * {
+    width: 100%;
+    margin: auto 0;
+    padding-left: 2*$baseline-grid;
+    padding-right: 2*$baseline-grid;
+  }
+
+  > .md-button {
+    border-radius: 0;
+    margin: auto 0;
+    font-size: (2*$baseline-grid) - 1;
+    text-transform: none;
+    font-weight: 400;
+    height: 100%;
+    padding-left: 2*$baseline-grid;
+    padding-right: 2*$baseline-grid;
+    @include rtl(text-align, left, right);
+    display: flex;
+    align-items: baseline;
+    align-content: flex-start;
+    width:100%;
+    md-icon {
+      @include rtl(margin, auto 2*$baseline-grid auto 0,  auto 0 auto 2*$baseline-grid);
+    }
+    p {
+      display:inline-block;
+      margin: auto;
+    }
+    span {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+    .md-ripple-container {
+      border-radius: inherit;
+    }
+  }
+}
+
+.md-menu {
+  padding: $baseline-grid 0;
+}
+
+md-toolbar {
+  .md-menu {
+    height: auto;
+    margin: auto;
+    padding: 0;
+  }
+}
+
+@media (max-width: $layout-breakpoint-sm - 1) {
+  md-menu-content {
+    min-width: 112px;
+  }
+  @for $i from 3 through 7 {
+    md-menu-content[width="#{$i}"] {
+      min-width: $i * 56px;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-sm) {
+  md-menu-content {
+    min-width: 96px;
+  }
+  @for $i from 3 through 7 {
+    md-menu-content[width="#{$i}"] {
+      min-width: $i * 64px;
+    }
+  }
+}
+
+
 $input-container-padding: 2px !default;
 
 $input-label-default-offset: 24px !default;
@@ -4123,249 +4366,6 @@ md-input-container {
     fill: #fff;
   }
 }
-
-md-toolbar.md-menu-toolbar {
-  h2.md-toolbar-tools {
-    line-height: 1rem;
-    height: auto;
-    padding: 3.5 * $baseline-grid;
-    padding-bottom: 1.5 * $baseline-grid;
-  }
-}
-
-md-menu-bar {
-  padding: 0 2.5 * $baseline-grid;
-  display: block;
-  position: relative;
-  z-index: 2;
-  .md-menu {
-    display: inline-block;
-    padding: 0;
-    position: relative;
-  }
-  button {
-    font-size: rem(1.4);
-    padding: 0 1.25 * $baseline-grid;
-    margin: 0;
-    border: 0;
-    background-color: transparent;
-    height: 5 * $baseline-grid;
-  }
-
-  md-backdrop._md-menu-backdrop {
-    z-index: -2;
-  }
-}
-
-md-menu-content._md-menu-bar-menu.md-dense {
-  max-height: none;
-  padding: 2 * $baseline-grid 0;
-  md-menu-item.md-indent {
-    position: relative;
-    > md-icon {
-      position: absolute;
-      padding: 0;
-      width: 24px;
-      top: 0.75 * $baseline-grid;
-      @include rtl-prop(left, right, 3 * $baseline-grid);
-    }
-    > .md-button, .md-menu > .md-button {
-      @include rtl(padding, 0 4 * $baseline-grid 0 8 * $baseline-grid, 0 8 * $baseline-grid 0 4 * $baseline-grid);
-    }
-  }
-  .md-button {
-    min-height: 0;
-    height: 4 * $baseline-grid;
-    display: flex;
-    span {
-      flex-grow: 1;
-    }
-    span.md-alt-text {
-      flex-grow: 0;
-      align-self: flex-end;
-      margin: 0 $baseline-grid;
-    }
-  }
-  md-menu-divider {
-    margin: $baseline-grid 0;
-  }
-
-  md-menu-item > .md-button, .md-menu > .md-button {
-    @include rtl(text-align, left, right);
-    text-align: start;
-  }
-
-  .md-menu {
-    padding: 0;
-    > .md-button {
-      position: relative;
-      margin: 0;
-      width: 100%;
-      text-transform: none;
-      font-weight: normal;
-      border-radius: 0px;
-      @include rtl-prop(padding-left, padding-right, 2 * $baseline-grid);
-      &:after {
-        display: block;
-        content: '\25BC';
-        position: absolute;
-        top: 0px;
-        speak: none;
-        @include rtl(transform, rotate(270deg) scaleY(0.45) scaleX(0.9), rotate(90deg) scaleY(0.45) scaleX(0.9));
-        @include rtl-prop(right, left, 3.5 * $baseline-grid);
-      }
-    }
-  }
-}
-
-$menu-border-radius: 2px !default;
-$max-visible-items: 6 !default;
-$menu-item-height: 6 * $baseline-grid !default;
-$dense-menu-item-height: 4 * $baseline-grid !default;
-$max-menu-height: 2 * $baseline-grid + $max-visible-items * $menu-item-height !default;
-$max-dense-menu-height: 2 * $baseline-grid + $max-visible-items * $dense-menu-item-height !default;
-
-._md-open-menu-container {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: $z-index-menu;
-  opacity: 0;
-  border-radius: $menu-border-radius;
-
-  md-menu-divider {
-    margin-top: $baseline-grid / 2;
-    margin-bottom: $baseline-grid / 2;
-    height: 1px;
-    min-height: 1px;
-    max-height: 1px;
-    width: 100%;
-  }
-
-  md-menu-content > * {
-    opacity: 0;
-  }
-
-  // Don't let the user click something until it's animated
-  &:not(._md-clickable) {
-    pointer-events: none;
-  }
-
-  // enter: menu scales in, then list fade in.
-  &._md-active {
-    opacity: 1;
-    transition: $swift-ease-out;
-    transition-duration: 200ms;
-    > md-menu-content > * {
-      opacity: 1;
-      transition: $swift-ease-in;
-      transition-duration: 200ms;
-      transition-delay: 100ms;
-    }
-  }
-  // leave: the container fades out
-  &._md-leave {
-    opacity: 0;
-    transition: $swift-ease-in;
-    transition-duration: 250ms;
-  }
-}
-
-md-menu-content {
-  display: flex;
-  flex-direction: column;
-  padding: $baseline-grid 0;
-  max-height: $max-menu-height;
-  overflow-y: auto;
-  &.md-dense {
-    max-height: $max-dense-menu-height;
-    md-menu-item {
-      height: $dense-menu-item-height;
-      min-height: 0px;
-    }
-  }
-}
-
-md-menu-item {
-  display: flex;
-  flex-direction: row;
-  min-height: $menu-item-height;
-  height: $menu-item-height;
-  align-content: center;
-  justify-content: flex-start;
-
-  > * {
-    width: 100%;
-    margin: auto 0;
-    padding-left: 2*$baseline-grid;
-    padding-right: 2*$baseline-grid;
-  }
-
-  > .md-button {
-    border-radius: 0;
-    margin: auto 0;
-    font-size: (2*$baseline-grid) - 1;
-    text-transform: none;
-    font-weight: 400;
-    height: 100%;
-    padding-left: 2*$baseline-grid;
-    padding-right: 2*$baseline-grid;
-    @include rtl(text-align, left, right);
-    display: flex;
-    align-items: baseline;
-    align-content: flex-start;
-    width:100%;
-    md-icon {
-      @include rtl(margin, auto 2*$baseline-grid auto 0,  auto 0 auto 2*$baseline-grid);
-    }
-    p {
-      display:inline-block;
-      margin: auto;
-    }
-    span {
-      margin-top: auto;
-      margin-bottom: auto;
-    }
-    .md-ripple-container {
-      border-radius: inherit;
-    }
-  }
-}
-
-.md-menu {
-  padding: $baseline-grid 0;
-}
-
-md-toolbar {
-  .md-menu {
-    height: auto;
-    margin: auto;
-    padding: 0;
-  }
-}
-
-@media (max-width: $layout-breakpoint-sm - 1) {
-  md-menu-content {
-    min-width: 112px;
-  }
-  @for $i from 3 through 7 {
-    md-menu-content[width="#{$i}"] {
-      min-width: $i * 56px;
-    }
-  }
-}
-
-@media (min-width: $layout-breakpoint-sm) {
-  md-menu-content {
-    min-width: 96px;
-  }
-  @for $i from 3 through 7 {
-    md-menu-content[width="#{$i}"] {
-      min-width: $i * 64px;
-    }
-  }
-}
-
 
 /** Matches "md-tabs md-tabs-wrapper" style. */
 $md-nav-bar-height: 48px;
@@ -4909,125 +4909,6 @@ md-radio-group {
   }
 }
 
-$sidenav-mobile-width: 320px !default;
-$sidenav-desktop-width: 400px !default;
-$sidenav-min-space: 56px !default;
-
-md-sidenav {
-  box-sizing: border-box;
-  position: absolute;
-  flex-direction: column;
-  z-index: $z-index-sidenav;
-
-  width: $sidenav-mobile-width;
-  max-width: $sidenav-mobile-width;
-  bottom: 0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-
-  ul {
-    list-style: none;
-  }
-
-  &._md-closed {
-    display: none;
-  }
-  &._md-closed-add,
-  &._md-closed-remove {
-    display: flex;
-    transition: 0.2s ease-in all;
-  }
-
-  &._md-closed-add._md-closed-add-active,
-  &._md-closed-remove._md-closed-remove-active {
-    transition: $swift-ease-out;
-  }
-
-  &._md-locked-open-add,
-  &._md-locked-open-remove {
-    position: static;
-    display: flex;
-    transform: translate3d(0, 0, 0);
-  }
-
-  &._md-locked-open,
-  &._md-locked-open._md-closed,
-  &._md-locked-open._md-closed.md-sidenav-left,
-  &._md-locked-open._md-closed.md-sidenav-right,
-  &._md-locked-open-remove._md-closed {
-    position: static;
-    display: flex;
-    transform: translate3d(0, 0, 0);
-  }
-  &._md-locked-open-remove-active {
-    transition: width $swift-ease-in-duration $swift-ease-in-timing-function,
-                min-width $swift-ease-in-duration $swift-ease-in-timing-function;
-    width: 0 !important;
-    min-width: 0 !important;
-  }
-
-  &._md-closed._md-locked-open-add {
-    width: 0 !important;
-    min-width: 0 !important;
-    transform: translate3d(0%, 0, 0);
-  }
-
-  &._md-closed._md-locked-open-add-active {
-    transition: width $swift-ease-in-duration $swift-ease-in-timing-function,
-                min-width $swift-ease-in-duration $swift-ease-in-timing-function;
-    width: $sidenav-mobile-width;
-    min-width: $sidenav-mobile-width;
-    transform: translate3d(0%, 0, 0);
-  }
-
-  @extend .md-sidenav-left;
-}
-._md-sidenav-backdrop._md-locked-open {
-  display: none;
-}
-
-.md-sidenav-left {
-  left: 0;
-  top: 0;
-  transform: translate3d(0%, 0, 0);
-  &._md-closed {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-.md-sidenav-right {
-  left: 100%;
-  top: 0;
-  transform: translate(-100%, 0);
-  &._md-closed {
-    transform: translate(0%, 0);
-  }
-}
-
-@media (min-width: $layout-breakpoint-xs) {
-  md-sidenav {
-    max-width: $sidenav-desktop-width;
-  }
-}
-
-@media (max-width: $sidenav-desktop-width + $sidenav-min-space) {
-  md-sidenav {
-    width: calc(100% - #{$sidenav-min-space});
-    min-width: calc(100% - #{$sidenav-min-space});
-    max-width: calc(100% - #{$sidenav-min-space});
-  }
-}
-
-// IE Only
-@media screen and (-ms-high-contrast: active) {
-  .md-sidenav-left {
-    border-right: 1px solid #fff;
-  }
-  .md-sidenav-right {
-    border-left: 1px solid #fff;
-  }
-}
-
 $select-checkbox-border-radius: 2px !default;
 $select-checkbox-border-width: 2px !default;
 $select-checkbox-width: rem(1.4) !default;
@@ -5276,6 +5157,125 @@ md-select-menu[multiple] {
       @include rtl(margin-left, $select-option-padding * (2 / 3), auto);
       @include rtl(margin-right, auto, $select-option-padding * (2 / 3));
     }
+  }
+}
+
+$sidenav-mobile-width: 320px !default;
+$sidenav-desktop-width: 400px !default;
+$sidenav-min-space: 56px !default;
+
+md-sidenav {
+  box-sizing: border-box;
+  position: absolute;
+  flex-direction: column;
+  z-index: $z-index-sidenav;
+
+  width: $sidenav-mobile-width;
+  max-width: $sidenav-mobile-width;
+  bottom: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  ul {
+    list-style: none;
+  }
+
+  &._md-closed {
+    display: none;
+  }
+  &._md-closed-add,
+  &._md-closed-remove {
+    display: flex;
+    transition: 0.2s ease-in all;
+  }
+
+  &._md-closed-add._md-closed-add-active,
+  &._md-closed-remove._md-closed-remove-active {
+    transition: $swift-ease-out;
+  }
+
+  &._md-locked-open-add,
+  &._md-locked-open-remove {
+    position: static;
+    display: flex;
+    transform: translate3d(0, 0, 0);
+  }
+
+  &._md-locked-open,
+  &._md-locked-open._md-closed,
+  &._md-locked-open._md-closed.md-sidenav-left,
+  &._md-locked-open._md-closed.md-sidenav-right,
+  &._md-locked-open-remove._md-closed {
+    position: static;
+    display: flex;
+    transform: translate3d(0, 0, 0);
+  }
+  &._md-locked-open-remove-active {
+    transition: width $swift-ease-in-duration $swift-ease-in-timing-function,
+                min-width $swift-ease-in-duration $swift-ease-in-timing-function;
+    width: 0 !important;
+    min-width: 0 !important;
+  }
+
+  &._md-closed._md-locked-open-add {
+    width: 0 !important;
+    min-width: 0 !important;
+    transform: translate3d(0%, 0, 0);
+  }
+
+  &._md-closed._md-locked-open-add-active {
+    transition: width $swift-ease-in-duration $swift-ease-in-timing-function,
+                min-width $swift-ease-in-duration $swift-ease-in-timing-function;
+    width: $sidenav-mobile-width;
+    min-width: $sidenav-mobile-width;
+    transform: translate3d(0%, 0, 0);
+  }
+
+  @extend .md-sidenav-left;
+}
+._md-sidenav-backdrop._md-locked-open {
+  display: none;
+}
+
+.md-sidenav-left {
+  left: 0;
+  top: 0;
+  transform: translate3d(0%, 0, 0);
+  &._md-closed {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.md-sidenav-right {
+  left: 100%;
+  top: 0;
+  transform: translate(-100%, 0);
+  &._md-closed {
+    transform: translate(0%, 0);
+  }
+}
+
+@media (min-width: $layout-breakpoint-xs) {
+  md-sidenav {
+    max-width: $sidenav-desktop-width;
+  }
+}
+
+@media (max-width: $sidenav-desktop-width + $sidenav-min-space) {
+  md-sidenav {
+    width: calc(100% - #{$sidenav-min-space});
+    min-width: calc(100% - #{$sidenav-min-space});
+    max-width: calc(100% - #{$sidenav-min-space});
+  }
+}
+
+// IE Only
+@media screen and (-ms-high-contrast: active) {
+  .md-sidenav-left {
+    border-right: 1px solid #fff;
+  }
+  .md-sidenav-right {
+    border-left: 1px solid #fff;
   }
 }
 
@@ -5793,6 +5793,74 @@ md-slider-container {
   }
 }
 
+$subheader-line-height: 1em !default;
+$subheader-font-size: rem(1.4) !default;
+$subheader-padding: ($baseline-grid * 2) !default;
+$subheader-font-weight: 500 !default;
+$subheader-margin: 0 0 0 0 !default;
+$subheader-sticky-shadow: 0px 2px 4px 0 rgba(0,0,0,0.16) !default;
+
+@keyframes subheaderStickyHoverIn {
+  0% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  100% {
+    box-shadow: $subheader-sticky-shadow;
+  }
+}
+@keyframes subheaderStickyHoverOut {
+  0% {
+    box-shadow: $subheader-sticky-shadow;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+._md-subheader-wrapper {
+
+  &:not(.md-sticky-no-effect) {
+    .md-subheader {
+      margin: 0;
+    }
+
+    transition: 0.2s ease-out margin;
+
+    &.md-sticky-clone {
+      z-index: 2;
+    }
+
+    &[sticky-state="active"] {
+      margin-top: -2px;
+    }
+
+    &:not(.md-sticky-clone)[sticky-prev-state="active"] ._md-subheader-inner:after {
+      animation: subheaderStickyHoverOut 0.3s ease-out both;
+    }
+  }
+
+}
+
+.md-subheader {
+  display: block;
+  font-size: $subheader-font-size;
+  font-weight: $subheader-font-weight;
+  line-height: $subheader-line-height;
+  margin: $subheader-margin;
+  position: relative;
+
+  ._md-subheader-inner {
+    display: block;
+    padding: $subheader-padding;
+  }
+
+  ._md-subheader-content {
+    display: block;
+    z-index: 1;
+    position: relative;
+  }
+}
+
 $switch-width: 36px !default;
 $switch-height: $baseline-grid * 3 !default;
 $switch-bar-height: 14px !default;
@@ -5955,74 +6023,6 @@ md-switch {
   }
   md-switch.md-default-theme ._md-thumb {
     background-color: #fff;
-  }
-}
-
-$subheader-line-height: 1em !default;
-$subheader-font-size: rem(1.4) !default;
-$subheader-padding: ($baseline-grid * 2) !default;
-$subheader-font-weight: 500 !default;
-$subheader-margin: 0 0 0 0 !default;
-$subheader-sticky-shadow: 0px 2px 4px 0 rgba(0,0,0,0.16) !default;
-
-@keyframes subheaderStickyHoverIn {
-  0% {
-    box-shadow: 0 0 0 0 transparent;
-  }
-  100% {
-    box-shadow: $subheader-sticky-shadow;
-  }
-}
-@keyframes subheaderStickyHoverOut {
-  0% {
-    box-shadow: $subheader-sticky-shadow;
-  }
-  100% {
-    box-shadow: 0 0 0 0 transparent;
-  }
-}
-
-._md-subheader-wrapper {
-
-  &:not(.md-sticky-no-effect) {
-    .md-subheader {
-      margin: 0;
-    }
-
-    transition: 0.2s ease-out margin;
-
-    &.md-sticky-clone {
-      z-index: 2;
-    }
-
-    &[sticky-state="active"] {
-      margin-top: -2px;
-    }
-
-    &:not(.md-sticky-clone)[sticky-prev-state="active"] ._md-subheader-inner:after {
-      animation: subheaderStickyHoverOut 0.3s ease-out both;
-    }
-  }
-
-}
-
-.md-subheader {
-  display: block;
-  font-size: $subheader-font-size;
-  font-weight: $subheader-font-weight;
-  line-height: $subheader-line-height;
-  margin: $subheader-margin;
-  position: relative;
-
-  ._md-subheader-inner {
-    display: block;
-    padding: $subheader-padding;
-  }
-
-  ._md-subheader-content {
-    display: block;
-    z-index: 1;
-    position: relative;
   }
 }
 
@@ -6796,63 +6796,6 @@ md-tooltip {
   }
 }
 
-$virtual-repeat-scrollbar-width: 16px !default;
-
-.md-virtual-repeat-container {
-  box-sizing: border-box;
-  display: block;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: relative;
-
-  .md-virtual-repeat-scroller {
-    bottom: 0;
-    box-sizing: border-box;
-    left: 0;
-    margin: 0;
-    overflow-x: hidden;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  .md-virtual-repeat-sizer {
-    box-sizing: border-box;
-    height: 1px;
-    display: block;
-    margin: 0;
-    padding: 0;
-    width: 1px;
-  }
-
-  .md-virtual-repeat-offsetter {
-    box-sizing: border-box;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-}
-
-.md-virtual-repeat-container.md-orient-horizontal {
-  .md-virtual-repeat-scroller {
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-
-  .md-virtual-repeat-offsetter {
-    // Leave room for the scroll bar.
-    // TODO: Will probably need to perform measurements at runtime.
-    bottom: $virtual-repeat-scrollbar-width;
-    @include rtl-prop(right, left, auto);
-    white-space: nowrap;
-  }
-}
-
 .md-whiteframe-1dp, .md-whiteframe-z1 {
   box-shadow: $whiteframe-shadow-1dp;
 }
@@ -6935,6 +6878,63 @@ $virtual-repeat-scrollbar-width: 16px !default;
 @media print {
   md-whiteframe, [md-whiteframe] {
     background-color: #ffffff;
+  }
+}
+
+$virtual-repeat-scrollbar-width: 16px !default;
+
+.md-virtual-repeat-container {
+  box-sizing: border-box;
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+
+  .md-virtual-repeat-scroller {
+    bottom: 0;
+    box-sizing: border-box;
+    left: 0;
+    margin: 0;
+    overflow-x: hidden;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .md-virtual-repeat-sizer {
+    box-sizing: border-box;
+    height: 1px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 1px;
+  }
+
+  .md-virtual-repeat-offsetter {
+    box-sizing: border-box;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+.md-virtual-repeat-container.md-orient-horizontal {
+  .md-virtual-repeat-scroller {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .md-virtual-repeat-offsetter {
+    // Leave room for the scroll bar.
+    // TODO: Will probably need to perform measurements at runtime.
+    bottom: $virtual-repeat-scrollbar-width;
+    @include rtl-prop(right, left, auto);
+    white-space: nowrap;
   }
 }
 
